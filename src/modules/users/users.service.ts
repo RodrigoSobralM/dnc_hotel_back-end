@@ -4,6 +4,7 @@ import { User } from 'src/generated/prisma/client';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import * as bcrypt from 'bcrypt';
+import { userSelectFields } from 'src/utils/userSelectFields';
 
 @Injectable()
 export class UsersService {
@@ -11,11 +12,14 @@ export class UsersService {
 
   async createUser(body: CreateUserDto): Promise<User> {
     body.password = await this.hashPassword(body.password);
-    return this.prisma.user.create({ data: body });
+    return this.prisma.user.create({
+      data: body,
+      select: userSelectFields,
+    });
   }
 
   async list(): Promise<User[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({ select: userSelectFields });
   }
 
   async show(id: number): Promise<User | null> {
@@ -29,7 +33,11 @@ export class UsersService {
       body.password = await this.hashPassword(body.password);
     }
     await this.validationUser(id);
-    return this.prisma.user.update({ where: { id: id }, data: body });
+    return this.prisma.user.update({
+      where: { id: id },
+      data: body,
+      select: userSelectFields,
+    });
   }
 
   async deleteUser(id: number): Promise<void> {
@@ -38,7 +46,10 @@ export class UsersService {
   }
 
   private async validationUser(id: number): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: userSelectFields,
+    });
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }

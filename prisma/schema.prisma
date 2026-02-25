@@ -26,7 +26,7 @@ model User {
   password  String
   role      Role     @default(USER)
   createdAt DateTime @default(now())
-  updadeAt  DateTime @updatedAt
+  updatedAt  DateTime @updatedAt
 
   @@map("users")
 }
