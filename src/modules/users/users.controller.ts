@@ -19,6 +19,7 @@ import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { User } from 'src/shared/decorators/user.decorator';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { RoleGuard } from 'src/shared/guards/role.guard';
+import { UserMatchGuard } from 'src/shared/guards/userMatch.guard';
 
 @UseInterceptors(LoggingInterceptor)
 @UseGuards(AuthGuard, RoleGuard)
@@ -43,6 +44,7 @@ export class UsersController {
     return this.userService.show(id);
   }
 
+  @UseGuards(UserMatchGuard)
   @Patch(':id')
   async updateUser(
     @ParamId() id: number,
@@ -51,6 +53,7 @@ export class UsersController {
     return this.userService.updateUser(id, user);
   }
 
+  @UseGuards(UserMatchGuard)
   @Delete(':id')
   async deleteUser(@ParamId() id: number): Promise<void> {
     return this.userService.deleteUser(id);
