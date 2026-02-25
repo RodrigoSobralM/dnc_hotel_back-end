@@ -4,11 +4,13 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from 'src/generated/prisma/client';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Controller('users')
 export class UsersController {
@@ -27,5 +29,13 @@ export class UsersController {
   @Get(':id')
   async show(@Param('id', ParseIntPipe) id: number): Promise<User | null> {
     return this.userService.show(id);
+  }
+
+  @Patch(':id')
+  async updateUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() user: UpdateUserDto,
+  ): Promise<User> {
+    return this.userService.updateUser(id, user);
   }
 }

@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from 'src/generated/prisma/client';
 import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class UsersService {
@@ -16,12 +17,21 @@ export class UsersService {
   }
 
   async show(id: number): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
+    const user = await this.validationUser(id);
 
+    return user;
+  }
+
+  async updateUser(id: number, body: UpdateUserDto): Promise<User> {
+    await this.validationUser(id);
+    return this.prisma.user.update({ where: { id: id }, data: body });
+  }
+
+  private async validationUser(id: number): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-
     return user;
   }
 }
