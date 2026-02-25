@@ -11,6 +11,12 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUser(body: CreateUserDto): Promise<UserSelect> {
+    const user = await this.findByEmail(body.email);
+
+    if (user) {
+      throw new HttpException('Email already in use', HttpStatus.BAD_REQUEST);
+    }
+
     body.password = await this.hashPassword(body.password);
     return this.prisma.user.create({
       data: body,
