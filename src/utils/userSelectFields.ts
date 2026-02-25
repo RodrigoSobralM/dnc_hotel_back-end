@@ -1,4 +1,6 @@
-export const userSelectFields = {
+import { Prisma } from 'src/generated/prisma/client';
+
+export const userSelectFields: Prisma.UserSelect = {
   id: true,
   name: true,
   email: true,
@@ -7,3 +9,7 @@ export const userSelectFields = {
   createdAt: false,
   updatedAt: false,
 };
+
+export type UserSelect = Prisma.UserGetPayload<{
+  select: typeof userSelectFields;
+}>;

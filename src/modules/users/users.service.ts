@@ -1,16 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { User } from 'src/generated/prisma/client';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import * as bcrypt from 'bcrypt';
-import { userSelectFields } from 'src/utils/userSelectFields';
+import { UserSelect, userSelectFields } from 'src/utils/userSelectFields';
+import { User } from 'src/generated/prisma/client';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createUser(body: CreateUserDto): Promise<User> {
+  async createUser(body: CreateUserDto): Promise<UserSelect> {
     body.password = await this.hashPassword(body.password);
     return this.prisma.user.create({
       data: body,
@@ -18,17 +18,17 @@ export class UsersService {
     });
   }
 
-  async list(): Promise<User[]> {
-    return this.prisma.user.findMany({ select: userSelectFields });
+  async list(): Promise<UserSelect[]> {
+    return await this.prisma.user.findMany({ select: userSelectFields });
   }
 
-  async show(id: number): Promise<User | null> {
+  async show(id: number): Promise<UserSelect | null> {
     const user = await this.validationUser(id);
 
     return user;
   }
 
-  async updateUser(id: number, body: UpdateUserDto): Promise<User> {
+  async updateUser(id: number, body: UpdateUserDto): Promise<UserSelect> {
     if (body.password) {
       body.password = await this.hashPassword(body.password);
     }
@@ -45,7 +45,13 @@ export class UsersService {
     await this.prisma.user.delete({ where: { id } });
   }
 
-  private async validationUser(id: number): Promise<User> {
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: { email },
+    });
+  }
+
+  private async validationUser(id: number): Promise<UserSelect> {
     const user = await this.prisma.user.findUnique({
       where: { id },
       select: userSelectFields,
