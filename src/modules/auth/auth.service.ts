@@ -1,10 +1,18 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { User } from 'src/generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { UsersService } from '../users/users.service';
 import { AuthLoginDto } from './dto/authLogin.dto';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from '../users/dto/createUser.dto';
+import { AuthRegisterDto } from './dto/authRegister.dto';
+import { AuthResetPasswordDto } from './dto/authResetPassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +28,7 @@ export class AuthService {
       expiresIn: '1d',
       issuer: 'dnc_hotel',
       audience: 'users',
-    }; // You can customize the payload as needed
+    };
     return { access_token: await this.jwtService.signAsync(payload, options) };
   }
 
@@ -33,5 +41,33 @@ export class AuthService {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
     return await this.generateToken(user);
+  }
+
+  async register(body: AuthRegisterDto): Promise<{ access_token: string }> {
+    const newUser: CreateUserDto = {
+      name: body.name,
+      email: body.email,
+      password: body.password,
+      role: body.role ?? 'USER',
+    };
+    const user = await this.userService.createUser(newUser);
+    return await this.generateToken(user);
+  }
+
+  async resetPassword({
+    token,
+    password,
+  }: AuthResetPasswordDto): Promise<{ access_token: string }> {
+    try {
+      const decoded = await this.jwtService.verifyAsync(token);
+
+      const user = await this.userService.updateUser(decoded.sub, {
+        password,
+      });
+
+      return this.generateToken(user);
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 }

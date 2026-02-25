@@ -45,6 +45,12 @@ export class UsersService {
     await this.prisma.user.delete({ where: { id } });
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: { email },
+    });
+  }
+
   private async validationUser(id: number): Promise<UserSelect> {
     const user = await this.prisma.user.findUnique({
       where: { id },
@@ -58,11 +64,5 @@ export class UsersService {
 
   private async hashPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, 10);
-  }
-
-  async findByEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({
-      where: { email },
-    });
   }
 }
