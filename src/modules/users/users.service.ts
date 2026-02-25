@@ -3,12 +3,14 @@ import { PrismaService } from '../prisma/prisma.service';
 import { User } from 'src/generated/prisma/client';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUser(body: CreateUserDto): Promise<User> {
+    body.password = await this.hashPassword(body.password);
     return this.prisma.user.create({ data: body });
   }
 
@@ -23,6 +25,9 @@ export class UsersService {
   }
 
   async updateUser(id: number, body: UpdateUserDto): Promise<User> {
+    if (body.password) {
+      body.password = await this.hashPassword(body.password);
+    }
     await this.validationUser(id);
     return this.prisma.user.update({ where: { id: id }, data: body });
   }
@@ -38,5 +43,9 @@ export class UsersService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
     return user;
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 10);
   }
 }
