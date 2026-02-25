@@ -27,6 +27,11 @@ export class UsersService {
     return this.prisma.user.update({ where: { id: id }, data: body });
   }
 
+  async deleteUser(id: number): Promise<void> {
+    await this.validationUser(id);
+    await this.prisma.user.delete({ where: { id } });
+  }
+
   private async validationUser(id: number): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
