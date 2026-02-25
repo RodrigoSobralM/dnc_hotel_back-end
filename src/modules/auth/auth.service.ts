@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { User } from 'src/generated/prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
 import { UsersService } from '../users/users.service';
 import { AuthLoginDto } from './dto/authLogin.dto';
 import * as bcrypt from 'bcrypt';
@@ -19,7 +18,6 @@ import { StringValue } from 'ms';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly prisma: PrismaService,
     private readonly userService: UsersService,
   ) {}
 
