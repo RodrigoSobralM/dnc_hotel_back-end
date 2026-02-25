@@ -7,12 +7,15 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from 'src/generated/prisma/client';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 
+@UseInterceptors(LoggingInterceptor)
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
