@@ -13,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../users/dto/createUser.dto';
 import { AuthRegisterDto } from './dto/authRegister.dto';
 import { AuthResetPasswordDto } from './dto/authResetPassword.dto';
+import { StringValue } from 'ms';
 
 @Injectable()
 export class AuthService {
@@ -22,10 +23,13 @@ export class AuthService {
     private readonly userService: UsersService,
   ) {}
 
-  async generateToken(user: User): Promise<{ access_token: string }> {
+  async generateToken(
+    user: User,
+    expiresIn: StringValue = '1d',
+  ): Promise<{ access_token: string }> {
     const payload = { sub: user.id, name: user.name };
     const options: JwtSignOptions = {
-      expiresIn: '1d',
+      expiresIn: expiresIn,
       issuer: 'dnc_hotel',
       audience: 'users',
     };
@@ -69,5 +73,15 @@ export class AuthService {
     } catch (error) {
       throw new UnauthorizedException('Invalid token');
     }
+  }
+
+  async forgotPassword(email: string): Promise<{ access_token: string }> {
+    const user = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    const token = await this.generateToken(user, '30m');
+
+    return token;
   }
 }
