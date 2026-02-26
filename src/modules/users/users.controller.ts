@@ -64,9 +64,10 @@ export class UsersController {
 
   @UseInterceptors(FileInterceptor('avatar'))
   @Post('avatar')
-  uploadAvatar(@UploadedFile() avatar: Express.Multer.File) {
-    console.log(avatar);
-    return true;
-    // return { filename: avatar.filename };
+  async uploadAvatar(
+    @User('id') id: number,
+    @UploadedFile() avatar: Express.Multer.File,
+  ): Promise<UserType> {
+    return this.userService.uploadAvatar(id, avatar.filename);
   }
 }
