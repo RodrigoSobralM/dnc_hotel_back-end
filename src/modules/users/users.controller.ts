@@ -20,9 +20,10 @@ import { User } from 'src/shared/decorators/user.decorator';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { RoleGuard } from 'src/shared/guards/role.guard';
 import { UserMatchGuard } from 'src/shared/guards/userMatch.guard';
+import { SkipThrottle, ThrottlerGuard } from '@nestjs/throttler';
 
 @UseInterceptors(LoggingInterceptor)
-@UseGuards(AuthGuard, RoleGuard)
+@UseGuards(AuthGuard, RoleGuard, ThrottlerGuard)
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
