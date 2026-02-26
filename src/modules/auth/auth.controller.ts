@@ -39,7 +39,7 @@ export class AuthController {
   @Post('forgot-password')
   async forgotPassword(
     @Body() { email }: AuthForgotPasswordDto,
-  ): Promise<{ access_token: string }> {
+  ): Promise<string> {
     return await this.authService.forgotPassword(email);
   }
 }
