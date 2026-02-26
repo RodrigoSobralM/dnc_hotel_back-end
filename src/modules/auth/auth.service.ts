@@ -13,12 +13,15 @@ import { CreateUserDto } from '../users/dto/createUser.dto';
 import { AuthRegisterDto } from './dto/authRegister.dto';
 import { AuthResetPasswordDto } from './dto/authResetPassword.dto';
 import { StringValue } from 'ms';
+import { MailerService } from '@nestjs-modules/mailer';
+import { templateHTML } from 'src/utils/templateHTML';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UsersService,
+    private readonly mailerService: MailerService,
   ) {}
 
   async generateToken(
@@ -73,13 +76,19 @@ export class AuthService {
     }
   }
 
-  async forgotPassword(email: string): Promise<{ access_token: string }> {
+  async forgotPassword(email: string): Promise<string> {
     const user = await this.userService.findByEmail(email);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
     const token = await this.generateToken(user, '30m');
 
-    return token;
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Reset Password - DNC Hotel',
+      html: templateHTML(user.name, token.access_token),
+    });
+
+    return `Password reset email sent to ${user.email}`;
   }
 }
