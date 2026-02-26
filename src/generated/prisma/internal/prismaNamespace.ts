@@ -613,6 +613,7 @@ export const HotelScalarFieldEnum = {
   address: 'address',
   image: 'image',
   price: 'price',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
