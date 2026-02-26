@@ -5,6 +5,8 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import * as bcrypt from 'bcrypt';
 import { UserSelect, userSelectFields } from 'src/utils/userSelectFields';
 import { User } from 'src/generated/prisma/client';
+import { join, resolve } from 'path';
+import { stat, unlink } from 'fs/promises';
 
 @Injectable()
 export class UsersService {
@@ -49,6 +51,24 @@ export class UsersService {
   async deleteUser(id: number): Promise<void> {
     await this.validationUser(id);
     await this.prisma.user.delete({ where: { id } });
+  }
+
+  async uploadAvatar(id: number, avatarFilename: string): Promise<UserSelect> {
+    const user = await this.validationUser(id);
+    const directory = resolve(process.cwd(), 'uploads');
+
+    if (user.avatar) {
+      const userAvatarFilePath = join(directory, user.avatar);
+      const userAvatarExists = await stat(userAvatarFilePath);
+
+      if (userAvatarExists) {
+        await unlink(userAvatarFilePath);
+      }
+    }
+
+    const userUpdated = await this.updateUser(id, { avatar: avatarFilename });
+
+    return userUpdated;
   }
 
   async findByEmail(email: string): Promise<User | null> {
