@@ -1,5 +1,6 @@
 import { Hotel } from 'src/generated/prisma/client';
 import { CreateHotelDto } from '../domain/dto/create-hotel.dto';
+import { UpdateHotelDto } from '../domain/dto/update-hotel.dto';
 import { IHotelRepository } from '../domain/repositories/Ihotel.repository';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
@@ -8,25 +9,47 @@ import { Injectable } from '@nestjs/common';
 export class HotelsRepository implements IHotelRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  createHotel(data: CreateHotelDto): Promise<Hotel> {
+  createHotel(data: CreateHotelDto, id: number): Promise<Hotel> {
+    data.ownerId = id;
     return this.prisma.hotel.create({
       data,
     });
   }
 
-  findAll(): Promise<Hotel[]> {
-    throw new Error('Method not implemented.');
+  findAllHotel(): Promise<Hotel[]> {
+    return this.prisma.hotel.findMany();
   }
 
-  findById(id: number): Promise<Hotel | null> {
-    throw new Error('Method not implemented.');
+  findByNameHotel(name: string): Promise<Hotel[] | null> {
+    return this.prisma.hotel.findMany({
+      where: { name: { contains: name, mode: 'insensitive' } },
+    });
   }
 
-  updateHotel(id: number, data: CreateHotelDto): Promise<Hotel | null> {
-    throw new Error('Method not implemented.');
+  findByOwnerHotel(ownerId: number): Promise<Hotel[]> {
+    return this.prisma.hotel.findMany({
+      where: { ownerId },
+    });
   }
 
-  delete(id: number): Promise<void> {
-    throw new Error('Method not implemented.');
+  findByIdHotel(id: number): Promise<Hotel | null> {
+    return this.prisma.hotel.findUnique({
+      where: { id },
+    });
+  }
+
+  updateHotel(id: number, data: UpdateHotelDto): Promise<Hotel | null> {
+    return this.prisma.hotel.update({
+      where: { id },
+      data,
+    });
+  }
+
+  deleteHotel(id: number): Promise<void> {
+    return this.prisma.hotel
+      .delete({
+        where: { id },
+      })
+      .then(() => {});
   }
 }
