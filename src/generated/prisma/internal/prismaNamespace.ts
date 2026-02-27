@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Hotel: 'Hotel'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "hotel"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Hotel: {
+      payload: Prisma.$HotelPayload<ExtArgs>
+      fields: Prisma.HotelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HotelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HotelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>
+        }
+        findFirst: {
+          args: Prisma.HotelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HotelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>
+        }
+        findMany: {
+          args: Prisma.HotelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>[]
+        }
+        create: {
+          args: Prisma.HotelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>
+        }
+        createMany: {
+          args: Prisma.HotelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HotelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>[]
+        }
+        delete: {
+          args: Prisma.HotelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>
+        }
+        update: {
+          args: Prisma.HotelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>
+        }
+        deleteMany: {
+          args: Prisma.HotelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HotelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HotelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>[]
+        }
+        upsert: {
+          args: Prisma.HotelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HotelPayload>
+        }
+        aggregate: {
+          args: Prisma.HotelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHotel>
+        }
+        groupBy: {
+          args: Prisma.HotelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HotelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HotelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HotelCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -529,6 +604,21 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const HotelScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  address: 'address',
+  image: 'image',
+  price: 'price',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HotelScalarFieldEnum = (typeof HotelScalarFieldEnum)[keyof typeof HotelScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -726,6 +816,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  hotel?: Prisma.HotelOmit
 }
 
 /* Types for Logging */
