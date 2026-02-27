@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Hotel } from 'src/generated/prisma/client';
 import type { IHotelRepository } from '../domain/repositories/Ihotel.repository';
 import { REPOSITORY_TOKEN_HOTEL } from '../utils/repositoriesTokens';
+import { Hotel } from 'src/generated/prisma/client';
 
 @Injectable()
 export class FindAllHotelsService {
@@ -10,7 +10,16 @@ export class FindAllHotelsService {
     private readonly hotelsRepository: IHotelRepository,
   ) {}
 
-  execute(): Promise<Hotel[]> {
-    return this.hotelsRepository.findAllHotel();
+  async execute(page: number = 1, limit: number = 10) {
+    const offSet = (page - 1) * limit;
+    const data = await this.hotelsRepository.findAllHotel(offSet, limit);
+    const totalHotels = await this.hotelsRepository.countHotels();
+
+    return {
+      total: totalHotels,
+      page,
+      per_page: limit,
+      data,
+    };
   }
 }
