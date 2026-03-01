@@ -27,3 +27,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Hotel = Prisma.HotelModel
+/**
+ * Model Reservation
+ * 
+ */
+export type Reservation = Prisma.ReservationModel

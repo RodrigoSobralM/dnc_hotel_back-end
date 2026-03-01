@@ -257,6 +257,7 @@ export type HotelWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Hotel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Hotel"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  reservations?: Prisma.ReservationListRelationFilter
 }
 
 export type HotelOrderByWithRelationInput = {
@@ -270,6 +271,7 @@ export type HotelOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
+  reservations?: Prisma.ReservationOrderByRelationAggregateInput
 }
 
 export type HotelWhereUniqueInput = Prisma.AtLeast<{
@@ -286,6 +288,7 @@ export type HotelWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Hotel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Hotel"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  reservations?: Prisma.ReservationListRelationFilter
 }, "id">
 
 export type HotelOrderByWithAggregationInput = {
@@ -329,6 +332,7 @@ export type HotelCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutHotelsInput
+  reservations?: Prisma.ReservationCreateNestedManyWithoutHotelInput
 }
 
 export type HotelUncheckedCreateInput = {
@@ -341,6 +345,7 @@ export type HotelUncheckedCreateInput = {
   ownerId: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutHotelInput
 }
 
 export type HotelUpdateInput = {
@@ -352,6 +357,7 @@ export type HotelUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutHotelsNestedInput
+  reservations?: Prisma.ReservationUpdateManyWithoutHotelNestedInput
 }
 
 export type HotelUncheckedUpdateInput = {
@@ -364,6 +370,7 @@ export type HotelUncheckedUpdateInput = {
   ownerId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutHotelNestedInput
 }
 
 export type HotelCreateManyInput = {
@@ -458,6 +465,11 @@ export type HotelSumOrderByAggregateInput = {
   ownerId?: Prisma.SortOrder
 }
 
+export type HotelScalarRelationFilter = {
+  is?: Prisma.HotelWhereInput
+  isNot?: Prisma.HotelWhereInput
+}
+
 export type HotelCreateNestedManyWithoutOwnerInput = {
   create?: Prisma.XOR<Prisma.HotelCreateWithoutOwnerInput, Prisma.HotelUncheckedCreateWithoutOwnerInput> | Prisma.HotelCreateWithoutOwnerInput[] | Prisma.HotelUncheckedCreateWithoutOwnerInput[]
   connectOrCreate?: Prisma.HotelCreateOrConnectWithoutOwnerInput | Prisma.HotelCreateOrConnectWithoutOwnerInput[]
@@ -508,6 +520,20 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type HotelCreateNestedOneWithoutReservationsInput = {
+  create?: Prisma.XOR<Prisma.HotelCreateWithoutReservationsInput, Prisma.HotelUncheckedCreateWithoutReservationsInput>
+  connectOrCreate?: Prisma.HotelCreateOrConnectWithoutReservationsInput
+  connect?: Prisma.HotelWhereUniqueInput
+}
+
+export type HotelUpdateOneRequiredWithoutReservationsNestedInput = {
+  create?: Prisma.XOR<Prisma.HotelCreateWithoutReservationsInput, Prisma.HotelUncheckedCreateWithoutReservationsInput>
+  connectOrCreate?: Prisma.HotelCreateOrConnectWithoutReservationsInput
+  upsert?: Prisma.HotelUpsertWithoutReservationsInput
+  connect?: Prisma.HotelWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.HotelUpdateToOneWithWhereWithoutReservationsInput, Prisma.HotelUpdateWithoutReservationsInput>, Prisma.HotelUncheckedUpdateWithoutReservationsInput>
+}
+
 export type HotelCreateWithoutOwnerInput = {
   name: string
   description: string
@@ -516,6 +542,7 @@ export type HotelCreateWithoutOwnerInput = {
   price: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reservations?: Prisma.ReservationCreateNestedManyWithoutHotelInput
 }
 
 export type HotelUncheckedCreateWithoutOwnerInput = {
@@ -527,6 +554,7 @@ export type HotelUncheckedCreateWithoutOwnerInput = {
   price: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reservations?: Prisma.ReservationUncheckedCreateNestedManyWithoutHotelInput
 }
 
 export type HotelCreateOrConnectWithoutOwnerInput = {
@@ -570,6 +598,68 @@ export type HotelScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Hotel"> | Date | string
 }
 
+export type HotelCreateWithoutReservationsInput = {
+  name: string
+  description: string
+  address: string
+  image?: string | null
+  price: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  owner: Prisma.UserCreateNestedOneWithoutHotelsInput
+}
+
+export type HotelUncheckedCreateWithoutReservationsInput = {
+  id?: number
+  name: string
+  description: string
+  address: string
+  image?: string | null
+  price: number
+  ownerId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type HotelCreateOrConnectWithoutReservationsInput = {
+  where: Prisma.HotelWhereUniqueInput
+  create: Prisma.XOR<Prisma.HotelCreateWithoutReservationsInput, Prisma.HotelUncheckedCreateWithoutReservationsInput>
+}
+
+export type HotelUpsertWithoutReservationsInput = {
+  update: Prisma.XOR<Prisma.HotelUpdateWithoutReservationsInput, Prisma.HotelUncheckedUpdateWithoutReservationsInput>
+  create: Prisma.XOR<Prisma.HotelCreateWithoutReservationsInput, Prisma.HotelUncheckedCreateWithoutReservationsInput>
+  where?: Prisma.HotelWhereInput
+}
+
+export type HotelUpdateToOneWithWhereWithoutReservationsInput = {
+  where?: Prisma.HotelWhereInput
+  data: Prisma.XOR<Prisma.HotelUpdateWithoutReservationsInput, Prisma.HotelUncheckedUpdateWithoutReservationsInput>
+}
+
+export type HotelUpdateWithoutReservationsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  owner?: Prisma.UserUpdateOneRequiredWithoutHotelsNestedInput
+}
+
+export type HotelUncheckedUpdateWithoutReservationsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type HotelCreateManyOwnerInput = {
   id?: number
   name: string
@@ -589,6 +679,7 @@ export type HotelUpdateWithoutOwnerInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reservations?: Prisma.ReservationUpdateManyWithoutHotelNestedInput
 }
 
 export type HotelUncheckedUpdateWithoutOwnerInput = {
@@ -600,6 +691,7 @@ export type HotelUncheckedUpdateWithoutOwnerInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reservations?: Prisma.ReservationUncheckedUpdateManyWithoutHotelNestedInput
 }
 
 export type HotelUncheckedUpdateManyWithoutOwnerInput = {
@@ -614,6 +706,35 @@ export type HotelUncheckedUpdateManyWithoutOwnerInput = {
 }
 
 
+/**
+ * Count Type HotelCountOutputType
+ */
+
+export type HotelCountOutputType = {
+  reservations: number
+}
+
+export type HotelCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reservations?: boolean | HotelCountOutputTypeCountReservationsArgs
+}
+
+/**
+ * HotelCountOutputType without action
+ */
+export type HotelCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HotelCountOutputType
+   */
+  select?: Prisma.HotelCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * HotelCountOutputType without action
+ */
+export type HotelCountOutputTypeCountReservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReservationWhereInput
+}
+
 
 export type HotelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -626,6 +747,8 @@ export type HotelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   updatedAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reservations?: boolean | Prisma.Hotel$reservationsArgs<ExtArgs>
+  _count?: boolean | Prisma.HotelCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hotel"]>
 
 export type HotelSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -669,6 +792,8 @@ export type HotelSelectScalar = {
 export type HotelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "address" | "image" | "price" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["hotel"]>
 export type HotelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reservations?: boolean | Prisma.Hotel$reservationsArgs<ExtArgs>
+  _count?: boolean | Prisma.HotelCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type HotelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -681,6 +806,7 @@ export type $HotelPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Hotel"
   objects: {
     owner: Prisma.$UserPayload<ExtArgs>
+    reservations: Prisma.$ReservationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1087,6 +1213,7 @@ readonly fields: HotelFieldRefs;
 export interface Prisma__HotelClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   owner<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  reservations<T extends Prisma.Hotel$reservationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hotel$reservationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1518,6 +1645,30 @@ export type HotelDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Hotels to delete.
    */
   limit?: number
+}
+
+/**
+ * Hotel.reservations
+ */
+export type Hotel$reservationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Reservation
+   */
+  select?: Prisma.ReservationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Reservation
+   */
+  omit?: Prisma.ReservationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReservationInclude<ExtArgs> | null
+  where?: Prisma.ReservationWhereInput
+  orderBy?: Prisma.ReservationOrderByWithRelationInput | Prisma.ReservationOrderByWithRelationInput[]
+  cursor?: Prisma.ReservationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReservationScalarFieldEnum | Prisma.ReservationScalarFieldEnum[]
 }
 
 /**
