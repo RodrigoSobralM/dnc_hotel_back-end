@@ -67,7 +67,7 @@ export class UsersController {
 
   @UseInterceptors(FileInterceptor('avatar'), FileValidationInterceptor)
   @Post('avatar')
-  async uploadAvatar(
+  uploadAvatar(
     @User('id') id: number,
     @UploadedFile(
       new ParseFilePipe({
