@@ -47,7 +47,7 @@ export type ReservationMinAggregateOutputType = {
   checkIn: Date | null
   checkOut: Date | null
   totalPrice: number | null
-  approved: boolean | null
+  status: $Enums.ReservationStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,7 +59,7 @@ export type ReservationMaxAggregateOutputType = {
   checkIn: Date | null
   checkOut: Date | null
   totalPrice: number | null
-  approved: boolean | null
+  status: $Enums.ReservationStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -71,7 +71,7 @@ export type ReservationCountAggregateOutputType = {
   checkIn: number
   checkOut: number
   totalPrice: number
-  approved: number
+  status: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -99,7 +99,7 @@ export type ReservationMinAggregateInputType = {
   checkIn?: true
   checkOut?: true
   totalPrice?: true
-  approved?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,7 +111,7 @@ export type ReservationMaxAggregateInputType = {
   checkIn?: true
   checkOut?: true
   totalPrice?: true
-  approved?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -123,7 +123,7 @@ export type ReservationCountAggregateInputType = {
   checkIn?: true
   checkOut?: true
   totalPrice?: true
-  approved?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -222,7 +222,7 @@ export type ReservationGroupByOutputType = {
   checkIn: Date
   checkOut: Date
   totalPrice: number
-  approved: boolean
+  status: $Enums.ReservationStatus
   createdAt: Date
   updatedAt: Date
   _count: ReservationCountAggregateOutputType | null
@@ -257,7 +257,7 @@ export type ReservationWhereInput = {
   checkIn?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   checkOut?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   totalPrice?: Prisma.FloatFilter<"Reservation"> | number
-  approved?: Prisma.BoolFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusFilter<"Reservation"> | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -271,7 +271,7 @@ export type ReservationOrderByWithRelationInput = {
   checkIn?: Prisma.SortOrder
   checkOut?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  approved?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -288,7 +288,7 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<{
   checkIn?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   checkOut?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   totalPrice?: Prisma.FloatFilter<"Reservation"> | number
-  approved?: Prisma.BoolFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusFilter<"Reservation"> | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -302,7 +302,7 @@ export type ReservationOrderByWithAggregationInput = {
   checkIn?: Prisma.SortOrder
   checkOut?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  approved?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ReservationCountOrderByAggregateInput
@@ -322,7 +322,7 @@ export type ReservationScalarWhereWithAggregatesInput = {
   checkIn?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   checkOut?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   totalPrice?: Prisma.FloatWithAggregatesFilter<"Reservation"> | number
-  approved?: Prisma.BoolWithAggregatesFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusWithAggregatesFilter<"Reservation"> | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reservation"> | Date | string
 }
@@ -331,7 +331,7 @@ export type ReservationCreateInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReservationsInput
@@ -345,7 +345,7 @@ export type ReservationUncheckedCreateInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -354,7 +354,7 @@ export type ReservationUpdateInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
@@ -368,7 +368,7 @@ export type ReservationUncheckedUpdateInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -380,7 +380,7 @@ export type ReservationCreateManyInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -389,7 +389,7 @@ export type ReservationUpdateManyMutationInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -401,7 +401,7 @@ export type ReservationUncheckedUpdateManyInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -423,7 +423,7 @@ export type ReservationCountOrderByAggregateInput = {
   checkIn?: Prisma.SortOrder
   checkOut?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  approved?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -442,7 +442,7 @@ export type ReservationMaxOrderByAggregateInput = {
   checkIn?: Prisma.SortOrder
   checkOut?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  approved?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -454,7 +454,7 @@ export type ReservationMinOrderByAggregateInput = {
   checkIn?: Prisma.SortOrder
   checkOut?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  approved?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -550,15 +550,15 @@ export type ReservationUncheckedUpdateManyWithoutHotelNestedInput = {
   deleteMany?: Prisma.ReservationScalarWhereInput | Prisma.ReservationScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
+export type EnumReservationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ReservationStatus
 }
 
 export type ReservationCreateWithoutUserInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   hotel: Prisma.HotelCreateNestedOneWithoutReservationsInput
@@ -570,7 +570,7 @@ export type ReservationUncheckedCreateWithoutUserInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -611,7 +611,7 @@ export type ReservationScalarWhereInput = {
   checkIn?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   checkOut?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   totalPrice?: Prisma.FloatFilter<"Reservation"> | number
-  approved?: Prisma.BoolFilter<"Reservation"> | boolean
+  status?: Prisma.EnumReservationStatusFilter<"Reservation"> | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reservation"> | Date | string
 }
@@ -620,7 +620,7 @@ export type ReservationCreateWithoutHotelInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReservationsInput
@@ -632,7 +632,7 @@ export type ReservationUncheckedCreateWithoutHotelInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -669,7 +669,7 @@ export type ReservationCreateManyUserInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -678,7 +678,7 @@ export type ReservationUpdateWithoutUserInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hotel?: Prisma.HotelUpdateOneRequiredWithoutReservationsNestedInput
@@ -690,7 +690,7 @@ export type ReservationUncheckedUpdateWithoutUserInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -701,7 +701,7 @@ export type ReservationUncheckedUpdateManyWithoutUserInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -712,7 +712,7 @@ export type ReservationCreateManyHotelInput = {
   checkIn: Date | string
   checkOut: Date | string
   totalPrice: number
-  approved?: boolean
+  status?: $Enums.ReservationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -721,7 +721,7 @@ export type ReservationUpdateWithoutHotelInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReservationsNestedInput
@@ -733,7 +733,7 @@ export type ReservationUncheckedUpdateWithoutHotelInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -744,7 +744,7 @@ export type ReservationUncheckedUpdateManyWithoutHotelInput = {
   checkIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checkOut?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumReservationStatusFieldUpdateOperationsInput | $Enums.ReservationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -758,7 +758,7 @@ export type ReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   checkIn?: boolean
   checkOut?: boolean
   totalPrice?: boolean
-  approved?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -772,7 +772,7 @@ export type ReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   checkIn?: boolean
   checkOut?: boolean
   totalPrice?: boolean
-  approved?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -786,7 +786,7 @@ export type ReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   checkIn?: boolean
   checkOut?: boolean
   totalPrice?: boolean
-  approved?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -800,12 +800,12 @@ export type ReservationSelectScalar = {
   checkIn?: boolean
   checkOut?: boolean
   totalPrice?: boolean
-  approved?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "hotelId" | "checkIn" | "checkOut" | "totalPrice" | "approved" | "createdAt" | "updatedAt", ExtArgs["result"]["reservation"]>
+export type ReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "hotelId" | "checkIn" | "checkOut" | "totalPrice" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["reservation"]>
 export type ReservationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   hotel?: boolean | Prisma.HotelDefaultArgs<ExtArgs>
@@ -832,7 +832,7 @@ export type $ReservationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     checkIn: Date
     checkOut: Date
     totalPrice: number
-    approved: boolean
+    status: $Enums.ReservationStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["reservation"]>
@@ -1266,7 +1266,7 @@ export interface ReservationFieldRefs {
   readonly checkIn: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly checkOut: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly totalPrice: Prisma.FieldRef<"Reservation", 'Float'>
-  readonly approved: Prisma.FieldRef<"Reservation", 'Boolean'>
+  readonly status: Prisma.FieldRef<"Reservation", 'ReservationStatus'>
   readonly createdAt: Prisma.FieldRef<"Reservation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reservation", 'DateTime'>
 }

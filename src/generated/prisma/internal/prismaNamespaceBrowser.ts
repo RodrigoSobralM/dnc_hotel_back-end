@@ -108,7 +108,7 @@ export const ReservationScalarFieldEnum = {
   checkIn: 'checkIn',
   checkOut: 'checkOut',
   totalPrice: 'totalPrice',
-  approved: 'approved',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
